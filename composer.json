@@ -1,0 +1,25 @@
+{
+    "name": "velas/echox",
+    "type": "library",
+    "description": "Simple template engine for php 8.2 without aditional dependences",
+    "keywords" : ["templating", "template engine", "html", "view", "MVC"],
+    "homepage": "https://github.com/victorvelas/echox",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Victor Velasquez",
+            "email": "victorvelas.lst@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Velas\\Echox\\": "src/"
+        },
+        "files": [
+            "src/Functions/Common.php"
+        ]
+    },
+    "require": {
+        "php": "^8.2"
+    }
+}
