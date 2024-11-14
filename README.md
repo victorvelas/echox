@@ -4,7 +4,7 @@ Echox is a library that takes echo for html content to another level.
 
 
 ## Installation
-Create a new PHP project (or go to the existing project's directory), open your favorite terminal of yesterday and today and run the next [Composer](http://getcomposer.org) command command
+Create a new PHP project (or go to the existing project's directory), open your favorite terminal of yesterday and today and run the next [Composer](http://getcomposer.org) command.
 
 ```
 composer require velas/echox
@@ -43,10 +43,10 @@ echo renderHtml('presentation', [
 
 This code will write in buffer out the next code in views/presentation.php file
 ```php
-<h1>Hellow World, welcome again <?= ($this->viewData['user'] ?? ''); ?></h1>
+<h1>Hello World, welcome again <?= ($this->viewData['user'] ?? ''); ?></h1>
 <hr>
 <?php if ($this->viewData['echoxIsCool'] === true) { ?>
-    <p>Now you can develop in php like a boss</p>
+    <p>Now you can write php code like a boss</p>
 <?php } ?>
 ```
 
