@@ -23,7 +23,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            // Adjust the relative path inside the docs repo (ej: docs-repo/changelog.md o docs-repo/docs/changelog.md)
+            // Adjust the relative path inside the docs repo (ej: docs-repo/changelog.md or docs-repo/docs/changelog.md)
             const filePath = 'docs-repo/docs/changelog.md';
 
             const tagName = context.payload.release.tag_name;
