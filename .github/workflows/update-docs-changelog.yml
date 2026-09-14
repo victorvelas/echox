@@ -1,0 +1,55 @@
+name: Update Changelog on documentation repository
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-external-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Run doc repository checkout (Using PAT)
+      - name: Docs repository checkout
+        uses: actions/checkout@v4
+        with:
+          repository: 'victorvelas/Echox-documentation'
+          token: ${{ secrets.DOCS_REPO_PAT }}
+          path: docs-repo
+
+      # 2. Update Changelog.md file in downloaded repository
+      - name: Insert release notes in Changelog.md
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            // Adjust the relative path inside the docs repo (ej: docs-repo/changelog.md or docs-repo/docs/changelog.md)
+            const filePath = 'docs-repo/docs/changelog.md';
+
+            const tagName = context.payload.release.tag_name;
+            const releaseBody = context.payload.release.body || 'No description specified.';
+            const releaseDate = new Date().toISOString().split('T')[0];
+
+            const newEntry = `## [${tagName}] - ${releaseDate}\n\n${releaseBody}\n\n`;
+
+            let content = fs.readFileSync(filePath, 'utf8');
+
+            const targetHeader = '# Changelog\n\nAll notable changes to Echox are documented here, following [Keep a Changelog](https://keepachangelog.com/).\n\n';
+            
+            if (content.includes(targetHeader)) {
+              content = content.replace(targetHeader, targetHeader + newEntry);
+            } else {
+              content = newEntry + content;
+            }
+
+            fs.writeFileSync(filePath, content);
+
+      # 3. Run Commit and Push
+      - name: Commit and Push to docs repository
+        run: |
+          cd docs-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "docs: update changelog version ${{ github.event.release.tag_name }}" || exit 0
+          git push
